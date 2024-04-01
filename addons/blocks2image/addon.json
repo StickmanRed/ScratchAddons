@@ -16,6 +16,15 @@
       "matches": ["projects"]
     }
   ],
+  "settings": [
+    {
+      "name": "Add option to import Scratch editor-compatible SVGs",
+      "id": "svgEditor",
+      "type": "boolean",
+      "default": false,
+      
+    }
+  ],
   "versionAdded": "1.13.0",
   "enabledByDefault": false
 }
