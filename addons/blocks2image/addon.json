@@ -6,6 +6,10 @@
     {
       "name": "summerscar",
       "link": "https://github.com/summerscar"
+    },
+    {
+      "name": "StickmanRed",
+      "link": "https://github.com/StickmanRed"
     }
   ],
   "dynamicEnable": true,
@@ -18,7 +22,7 @@
   ],
   "settings": [
     {
-      "name": "Add option to import Scratch editor-compatible SVGs",
+      "name": "Add Scratch Editor compatibility",
       "id": "svgEditor",
       "type": "boolean",
       "default": false
