@@ -53,14 +53,7 @@ export default async function ({ addon, console, msg }) {
 
       items.splice(
         insertBeforeIndex,
-        0, {
-          enabled: !!svgchild?.childNodes?.length,
-          text: msg("export_all_to_SVG_Editor"),
-          callback: () => {
-            exportBlock(false, undefined, true);
-          },
-          separator: true,
-        },
+        0,
         {
           enabled: !!svgchild?.childNodes?.length,
           text: msg("export_all_to_SVG"),
@@ -78,6 +71,21 @@ export default async function ({ addon, console, msg }) {
           separator: false,
         }
       );
+
+      if addon.settings.get("svgEditor") {
+        items.splice(
+        insertBeforeIndex,
+        0,
+          {
+            enabled: !!svgchild?.childNodes?.length,
+            text: msg("export_all_to_SVG_Editor"),
+            callback: () => {
+              exportBlock(false, undefined, true);
+            },
+            separator: true,
+          }
+        );
+      }
 
       return items;
     },
@@ -99,14 +107,6 @@ export default async function ({ addon, console, msg }) {
         0,
         {
           enabled: true,
-          text: msg("export_selected_to_SVG_Editor"),
-          callback: () => {
-            exportBlock(false, block, true);
-          },
-          separator: true,
-        },
-        {
-          enabled: true,
           text: msg("export_selected_to_SVG"),
           callback: () => {
             exportBlock(false, block);
@@ -122,6 +122,21 @@ export default async function ({ addon, console, msg }) {
           separator: false,
         }
       );
+
+      if addon.settings.get("svgEditor") {
+        items.splice(
+          insertBeforeIndex,
+          0,
+          {
+            enabled: true,
+            text: msg("export_selected_to_SVG_Editor"),
+            callback: () => {
+              exportBlock(false, block, true);
+            },
+            separator: true,
+          }
+        );
+      }
 
       return items;
     },
