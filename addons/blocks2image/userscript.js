@@ -140,7 +140,7 @@ export default async function ({ addon, console, msg }) {
       text.innerHTML = text.innerHTML.replace(/&nbsp;/g, " ");
     });
 
-    const textElements = document.querySelectorAll("text");
+    const textElements = svg.querySelectorAll("text");
     var textTransform;
     for (var textIndex of textElements) {
       textIndex.setAttribute("text-anchor", "start");
