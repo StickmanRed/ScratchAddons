@@ -142,16 +142,16 @@ export default async function ({ addon, console, msg }) {
 
     const textElements = document.querySelectorAll("text");
     var textTransform;
-    for (i of textElements) {
-      i.setAttribute("text-anchor", "start");
-      try {textTransform = i.getAttribute("transform").substr(10).replaceAll(")","").trimEnd().split(", ");}
+    for (textIndex of textElements) {
+      textIndex.setAttribute("text-anchor", "start");
+      try {textTransform = textIndex.getAttribute("transform").substr(10).replaceAll(")","").trimEnd().split(", ");}
       catch {textTransform = ["0", "0"];}
       textTransform[0] = Number.parseFloat(textTransform[0]); textTransform[1] = Number.parseFloat(textTransform[1]);
-      if (i.parentElement.getAttribute("class") === "blocklyEditableText") {
-        i.setAttribute("transform", `translate(${textTransform[0] + 3}, ${textTransform[1] + 2}) `);
+      if (textIndex.parentElement.getAttribute("class") === "blocklyEditableText") {
+        textIndex.setAttribute("transform", `translate(${textTransform[0] + 3}, ${textTransform[1] + 2}) `);
       }
       else {
-        i.setAttribute("transform", `translate(${textTransform[0]}, ${textTransform[1] - 14}) `);
+        textIndex.setAttribute("transform", `translate(${textTransform[0]}, ${textTransform[1] - 14}) `);
       }
     }
 
