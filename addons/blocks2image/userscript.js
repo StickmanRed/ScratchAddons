@@ -142,7 +142,7 @@ export default async function ({ addon, console, msg }) {
 
     const textElements = document.querySelectorAll("text");
     var textTransform;
-    for (textIndex of textElements) {
+    for (var textIndex of textElements) {
       textIndex.setAttribute("text-anchor", "start");
       try {textTransform = textIndex.getAttribute("transform").substr(10).replaceAll(")","").trimEnd().split(", ");}
       catch {textTransform = ["0", "0"];}
