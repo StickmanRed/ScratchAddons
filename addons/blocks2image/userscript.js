@@ -60,7 +60,7 @@ export default async function ({ addon, console, msg }) {
           callback: () => {
             exportBlock(false);
           },
-          separator: false,
+          separator: !(addon.settings.get("svgEditor")),
         },
         {
           enabled: !!svgchild?.childNodes?.length,
@@ -111,7 +111,7 @@ export default async function ({ addon, console, msg }) {
           callback: () => {
             exportBlock(false, block);
           },
-          separator: false,
+          separator: !(addon.settings.get("svgEditor")),
         },
         {
           enabled: true,
@@ -155,18 +155,20 @@ export default async function ({ addon, console, msg }) {
       text.innerHTML = text.innerHTML.replace(/&nbsp;/g, " ");
     });
 
-    const textElements = svg.querySelectorAll("text");
-    var textTransform;
-    for (var textIndex of textElements) {
-      textIndex.setAttribute("text-anchor", "start");
-      try {textTransform = textIndex.getAttribute("transform").substr(10).replaceAll(")","").trimEnd().split(", ");}
-      catch {textTransform = ["0", "0"];}
-      textTransform[0] = Number.parseFloat(textTransform[0]); textTransform[1] = Number.parseFloat(textTransform[1]);
-      if (textIndex.parentElement.getAttribute("class") === "blocklyEditableText") {
-        textIndex.setAttribute("transform", `translate(${textTransform[0] + 3}, ${textTransform[1] + 2}) `);
-      }
-      else {
-        textIndex.setAttribute("transform", `translate(${textTransform[0]}, ${textTransform[1] - 14}) `);
+    if (addon.settings.get("svgEditor")) {
+      const textElements = svg.querySelectorAll("text");
+      var textTransform;
+      for (var textIndex of textElements) {
+        textIndex.setAttribute("text-anchor", "start");
+        try {textTransform = textIndex.getAttribute("transform").substr(10).replaceAll(")","").trimEnd().split(", ");}
+        catch {textTransform = ["0", "0"];}
+        textTransform[0] = Number.parseFloat(textTransform[0]); textTransform[1] = Number.parseFloat(textTransform[1]);
+        if (textIndex.parentElement.getAttribute("class") === "blocklyEditableText") {
+          textIndex.setAttribute("transform", `translate(${textTransform[0] + 3}, ${textTransform[1] + 2}) `);
+        }
+        else {
+          textIndex.setAttribute("transform", `translate(${textTransform[0]}, ${textTransform[1] - 14}) `);
+        }
       }
     }
 
