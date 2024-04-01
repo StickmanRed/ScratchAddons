@@ -72,7 +72,7 @@ export default async function ({ addon, console, msg }) {
         }
       );
 
-      if addon.settings.get("svgEditor") {
+      if (addon.settings.get("svgEditor")) {
         items.splice(
         insertBeforeIndex,
         0,
@@ -123,7 +123,7 @@ export default async function ({ addon, console, msg }) {
         }
       );
 
-      if addon.settings.get("svgEditor") {
+      if (addon.settings.get("svgEditor")) {
         items.splice(
           insertBeforeIndex,
           0,
