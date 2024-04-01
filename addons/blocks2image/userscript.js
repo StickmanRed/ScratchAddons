@@ -53,14 +53,21 @@ export default async function ({ addon, console, msg }) {
 
       items.splice(
         insertBeforeIndex,
-        0,
+        0, {
+          enabled: !!svgchild?.childNodes?.length,
+          text: msg("export_all_to_SVG_Editor"),
+          callback: () => {
+            exportBlock(false, undefined, true);
+          },
+          separator: true,
+        },
         {
           enabled: !!svgchild?.childNodes?.length,
           text: msg("export_all_to_SVG"),
           callback: () => {
             exportBlock(false);
           },
-          separator: true,
+          separator: false,
         },
         {
           enabled: !!svgchild?.childNodes?.length,
@@ -92,11 +99,19 @@ export default async function ({ addon, console, msg }) {
         0,
         {
           enabled: true,
+          text: msg("export_selected_to_SVG_Editor"),
+          callback: () => {
+            exportBlock(false, block, true);
+          },
+          separator: true,
+        },
+        {
+          enabled: true,
           text: msg("export_selected_to_SVG"),
           callback: () => {
             exportBlock(false, block);
           },
-          separator: true,
+          separator: false,
         },
         {
           enabled: true,
@@ -113,7 +128,7 @@ export default async function ({ addon, console, msg }) {
     { blocks: true }
   );
 
-  async function exportBlock(isExportPNG, block) {
+  async function exportBlock(isExportPNG, block, toEditor) {
     let svg;
     if (block) {
       svg = selectedBlocks(isExportPNG, block);
@@ -124,6 +139,21 @@ export default async function ({ addon, console, msg }) {
     svg.querySelectorAll("text").forEach((text) => {
       text.innerHTML = text.innerHTML.replace(/&nbsp;/g, " ");
     });
+
+    const textElements = document.querySelectorAll("text");
+    var textTransform;
+    for (i of textElements) {
+      i.setAttribute("text-anchor", "start");
+      try {textTransform = i.getAttribute("transform").substr(10).replaceAll(")","").trimEnd().split(", ");}
+      catch {textTransform = ["0", "0"];}
+      textTransform[0] = Number.parseFloat(textTransform[0]); textTransform[1] = Number.parseFloat(textTransform[1]);
+      if (i.parentElement.getAttribute("class") === "blocklyEditableText") {
+        i.setAttribute("transform", `translate(${textTransform[0] + 3}, ${textTransform[1] + 2}) `);
+      }
+      else {
+        i.setAttribute("transform", `translate(${textTransform[0]}, ${textTransform[1] - 14}) `);
+      }
+    }
 
     // replace external images with data URIs
     await Promise.all(
