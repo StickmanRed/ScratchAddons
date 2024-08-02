@@ -54,7 +54,7 @@ export default async function ({ addon, console }) {
         useElement.replaceWith(referElement);
         useElement.remove();
       }
-      
+
       iframe.remove();
     }
     return svg;
